@@ -198,6 +198,18 @@ describe('socket.io', () => {
         assert.strictEqual(err.message, '[[error:invalid-data]]');
     });
 
+    it('should error when removing the last admin', async () => {
+        let err;
+        const count = await groups.getMemberCount('administrators');
+        assert(count === 1);
+        try {
+            await socketAdmin.user.removeAdmins({ uid: adminUid }, [adminUid]);
+        } catch (_err) {
+            err = _err;
+        }
+        assert.strictEqual(err.message, '[[error:cant-remove-last-admin]]');
+    });
+
     describe('user create/delete', () => {
         let uid;
         const apiUsers = require('../src/api/users');
