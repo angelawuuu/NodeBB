@@ -142,9 +142,9 @@ describe('socket.io', () => {
     it('should error when making banned users admins', async () => {
         let err;
         try {
-          await socketAdmin.user.makeAdmins({ uid: adminUid }, [regularUid]);
+            await socketAdmin.user.makeAdmins({ uid: adminUid }, [regularUid]);
         } catch (_err) {
-          err = _err;
+            err = _err;
         }
         assert.strictEqual(err.message, '[[error:cant-make-banned-users-admin]]');
     });
@@ -170,9 +170,9 @@ describe('socket.io', () => {
     it('should error when making admins with invalid uids', async () => {
         let err;
         try {
-          await socketAdmin.user.makeAdmins({ uid: adminUid }, null);
+            await socketAdmin.user.makeAdmins({ uid: adminUid }, null);
         } catch (_err) {
-          err = _err;
+            err = _err;
         }
         assert.strictEqual(err.message, '[[error:invalid-data]]');
     });
@@ -186,6 +186,16 @@ describe('socket.io', () => {
                 done();
             });
         });
+    });
+
+    it('should error when removing admins with invalid uids', async () => {
+        let err;
+        try {
+            await socketAdmin.user.removeAdmins({ uid: adminUid }, null);
+        } catch (_err) {
+            err = _err;
+        }
+        assert.strictEqual(err.message, '[[error:invalid-data]]');
     });
 
     describe('user create/delete', () => {
