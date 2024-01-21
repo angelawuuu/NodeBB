@@ -139,6 +139,16 @@ describe('socket.io', () => {
         });
     });
 
+    it('should error when making banned users admins', async () => {
+        let err;
+        try {
+          await socketAdmin.user.makeAdmins({ uid: adminUid }, [regularUid]);
+        } catch (_err) {
+          err = _err;
+        }
+        assert.strictEqual(err.message, '[[error:cant-make-banned-users-admin]]');
+    });
+
     it('should unban a user', async () => {
         const apiUser = require('../src/api/users');
         await apiUser.unban({ uid: adminUid }, { uid: regularUid });
